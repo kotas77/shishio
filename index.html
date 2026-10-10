@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>ふたりの将棋盤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>ふたりの将棋盤</h1>
+  <div class="room">
+    <div class="status"><span class="dot" id="dot"></span><span id="statusText">接続しています…</span></div>
+    <span>部屋 <code id="roomName">-</code></span>
+    <button class="b" id="btnCopyLink">招待リンクをコピー</button>
+    <span id="copyMsg" role="status"></span>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="game">
+    <div class="banner" id="banner" hidden>
+      <strong id="bannerText"></strong>
+      <button class="b" id="bannerUndo">一手戻す</button>
+      <button class="b pri" id="bannerNew">新しい対局</button>
+    </div>
+    <div class="editbar" id="editbar" hidden>
+      <span>配置を編集中です。駒は棋譜に残りません。</span>
+    </div>
+    <div class="hand" id="handTop"></div>
+    <div class="boardbox">
+      <div class="board" id="board" role="grid" aria-label="将棋盤"></div>
+      <div class="files" id="files"></div>
+      <div class="ranks" id="ranks"></div>
+    </div>
+    <div class="hand" id="handBottom"></div>
+    <div class="prompt" id="promo" hidden>
+      <p id="promoText">成りますか？</p>
+      <button class="b pri" id="promoYes">成る</button>
+      <button class="b" id="promoNo">成らない</button>
+    </div>
+    <div class="prompt" id="lionBar" hidden>
+      <p>獅子はもう1歩動けます。隣のマスをクリックしてください（元のマスへ戻ることもできます）。</p>
+      <button class="b pri" id="lionStop">ここで止める</button>
+    </div>
+  </section>
+
+  <aside>
+    <div class="card">
+      <p class="turn" id="turn">☗ 先手の番</p>
+      <p class="help" id="help">駒をクリックして選び、移動先をクリック。取った駒は自分の駒台へ。駒台の駒を選んで空きマスに打てます。</p>
+    </div>
+
+    <div class="card">
+      <h2>ルール</h2>
+      <div class="seg" id="variants">
+        <button class="b" data-v="hon" aria-pressed="false">本将棋</button>
+        <button class="b" data-v="oute" aria-pressed="false">王手将棋</button>
+        <button class="b" data-v="free" aria-pressed="false">判定なし</button>
+      </div>
+      <p class="help" id="ruleHelp"></p>
+    </div>
+
+    <div class="card" id="editCard">
+      <h2>配置の編集</h2>
+      <div id="editOff">
+        <button class="b" id="btnEdit">配置を編集する</button>
+        <p class="help">獅子などの駒を置いたり、駒落ちや詰将棋の局面を作ったりできます。獅子は1手で玉の動きを2回でき、隣の駒を取って元のマスへ戻ることもできます。</p>
+      </div>
+      <div id="editOn" hidden>
+        <div id="palette"></div>
+        <div class="btns">
+          <button class="b" id="btnOwner" disabled>選んだ駒の先後を入替</button>
+          <button class="b" id="btnDelete" disabled>選んだ駒を消す</button>
+          <button class="b" id="btnClear">盤を空にする</button>
+          <button class="b" id="btnInit">初期配置</button>
+          <button class="b pri" id="btnEditDone">この配置で対局開始</button>
+        </div>
+        <p class="help">駒を選んでマスをクリックすると置けます（同じ駒の上をもう一度クリックで消去）。駒台をクリックすると持ち駒に足せます。駒台の駒をクリックすると1枚減ります。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>操作</h2>
+      <div class="btns">
+        <button class="b" id="btnFlip">盤を反転</button>
+        <button class="b" id="btnPromote" disabled>選んだ駒を成る／戻す</button>
+        <button class="b" id="btnUndo">一手戻す</button>
+        <button class="b danger" id="btnReset">新しい対局</button>
+      </div>
+      <div class="confirm" id="confirm" hidden>
+        <span>盤面を初期配置に戻します。</span>
+        <button class="b danger" id="confirmYes">戻す</button>
+        <button class="b" id="confirmNo">やめる</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>棋譜</h2>
+      <ol class="kifu" id="kifu"></ol>
+    </div>
+  </aside>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
